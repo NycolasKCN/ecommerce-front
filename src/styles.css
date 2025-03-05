@@ -4,6 +4,10 @@
  * ----------------------------
  */
 
+html{
+  height: 100%;
+}
+
  *{
     margin:0;
     padding:0;
@@ -13,6 +17,7 @@
 }
 
 body{
+    min-height: 100%;
     font-family:Poppins,sans-serif;
     font-weight:400;
     font-size:16px;
@@ -325,6 +330,8 @@ input.au-input.au-input-xl{
 
 .menu-sidebar .logo{
     background:#fff;
+    color: #333;
+    text-decoration: none;
     height:75px;
     padding:0 35px;
     display:-webkit-box;
@@ -720,7 +727,11 @@ table.table.table-bordered th{
     color:#0da8e4
 }
 .detail-section{
-    margin-top:60px
+    margin-top: 60px
+}
+
+.detail-img{
+  width: 30%;
 }
 /**/
 
