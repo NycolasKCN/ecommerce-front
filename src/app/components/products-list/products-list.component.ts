@@ -3,14 +3,19 @@ import { CurrencyPipe, NgForOf, NgIf } from '@angular/common';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../common/product';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { NgbPagination } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-products-list',
-  imports: [NgIf, NgForOf, CurrencyPipe, RouterLink],
+  imports: [NgIf, NgForOf, CurrencyPipe, RouterLink, NgbPagination],
   templateUrl: './products-list.component.html',
   styleUrl: './products-list.component.css',
 })
 export class ProductsListComponent implements OnInit {
+  currentPageNumber: number = 1;
+  pageSize: number = 5;
+  totalProductsRetrived: number = 0;
+
   currentCategoryId: number = 1;
   searchMode: boolean = false;
 
@@ -41,22 +46,46 @@ export class ProductsListComponent implements OnInit {
     const keyword: string = this.route.snapshot.paramMap.get('keyword')!;
 
     this.productService
-      .searchProducts(keyword)
-      .subscribe((data) => (this.products = data));
+      .searchProducts(keyword, this.currentPageNumber - 1, this.pageSize)
+      .subscribe(this.processResponse());
   }
 
   handleListProducts() {
     const hasCategoryId: boolean = this.route.snapshot.paramMap.has('id');
-    this.currentCategoryId = 1;
 
     if (hasCategoryId) {
       this.currentCategoryId = +this.route.snapshot.paramMap.get('id')!;
+      this.handleListProductsByCategory();
+      return;
     }
 
     this.productService
-      .searchProductsByCategory(this.currentCategoryId)
-      .subscribe((data) => {
-        this.products = data;
-      });
+      .listProducts(this.currentPageNumber - 1, this.pageSize)
+      .subscribe(this.processResponse());
+  }
+
+  handleListProductsByCategory() {
+    this.productService
+      .searchProductsByCategory(
+        this.currentCategoryId,
+        this.currentPageNumber - 1,
+        this.pageSize
+      )
+      .subscribe(this.processResponse());
+  }
+
+  updatePageSize(pageSize: string) {
+    this.pageSize = +pageSize;
+    this.currentPageNumber = 1;
+    this.listProducts();
+  }
+
+  processResponse() {
+    return (response: any) => {
+      this.products = response.content;
+      this.currentPageNumber = response.page.number + 1;
+      this.pageSize = response.page.size;
+      this.totalProductsRetrived = response.page.totalElements;
+    };
   }
 }
