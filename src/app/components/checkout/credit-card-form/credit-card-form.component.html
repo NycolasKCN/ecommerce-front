@@ -1,0 +1,79 @@
+<ng-container [formGroup]="form">
+  <div class="form-area">
+    <h3>Credit Card</h3>
+    <div class="row">
+      <div class="col-md-2">
+        <label for="CardType">Card Type</label>
+      </div>
+      <div class="col-md-9">
+        <div class="input-space">
+          <select id="CardType" formControlName="cardType">
+            <option>Visa</option>
+            <option>Mastercard</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-2">
+        <label for="NameOnCard">Name on card</label>
+      </div>
+      <div class="col-md-9">
+        <div class="input-space">
+          <input id="NameOnCard" type="text" formControlName="nameOnCard" />
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-2">
+        <label for="CardNumber">Card number</label>
+      </div>
+      <div class="col-md-9">
+        <div class="input-space">
+          <input id="CardNumber" type="text" formControlName="cardNumber" />
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-2">
+        <label for="SecurityCode">Security code</label>
+      </div>
+      <div class="col-md-9">
+        <div class="input-space">
+          <input id="SecurityCode" type="text" formControlName="securityCode" />
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-2">
+        <label for="ExpirationMonth">Expiration month</label>
+      </div>
+      <div class="col-md-9">
+        <div class="input-space">
+          <select id="ExpirationMonth" formControlName="expirationMonth">
+            <option *ngFor="let month of months">
+              {{ month }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-2">
+        <label for="ExpirationYear">Expiration Year</label>
+      </div>
+      <div class="col-md-9">
+        <div class="input-space">
+          <select id="ExpirationYear" formControlName="expirationYear">
+            <option *ngFor="let year of creditCardYears">{{ year }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

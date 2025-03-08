@@ -1,0 +1,47 @@
+<div class="page-m">
+  <div class="section-content section-content-p30">
+    <div class="container-fluid">
+      <form [formGroup]="checkoutFormGroup" (ngSubmit)="onSubmit()">
+        <app-customer-form formGroupName="customer"></app-customer-form>
+
+        <app-shipping-address-form
+          formGroupName="shippingAddress"
+        ></app-shipping-address-form>
+
+        <div class="input-space">
+          <label class="au-checkbox" for="SameAddress">
+            <input
+              type="checkbox"
+              id="SameAddress"
+              (change)="copyShippingAddressToShippingAddress($event)"
+            />
+            <span class="au-checkmark"></span>
+            Billing Address same as Shipping Address
+          </label>
+        </div>
+
+        <app-billing-address-form
+          formGroupName="billingAddress"
+        ></app-billing-address-form>
+
+        <app-credit-card-form formGroupName="creditCard"></app-credit-card-form>
+
+        <div class="form-area">
+          <h3>Review your order</h3>
+          <p>Total quantity: {{ totalQuantity }}</p>
+          <p>Total price: {{ totalPrice | currency : "BRL" }}</p>
+        </div>
+
+        <div class="class-center">
+          <button
+            (click)="onSubmit()"
+            type="submit"
+            class="btn btn-primary btn-info"
+          >
+            Purchase
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

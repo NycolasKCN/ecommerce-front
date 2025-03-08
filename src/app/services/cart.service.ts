@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Product } from '../common/product';
 import { CartItem } from '../common/cart-item';
 import { Subject } from 'rxjs';
 
@@ -14,13 +13,29 @@ export class CartService {
 
   constructor() {}
 
-  addItem(newItem: CartItem) {
-    if (this.items.has(newItem.id)) {
-      this.items.get(newItem.id)!.quantity++;
+  addItem(cartItem: CartItem) {
+    if (this.items.has(cartItem.id)) {
+      this.items.get(cartItem.id)!.quantity++;
     } else {
-      this.items.set(newItem.id, newItem);
+      this.items.set(cartItem.id, cartItem);
     }
 
+    this.computeCartTotal();
+  }
+
+  decrementItemQuantity(cartItem: CartItem) {
+    const itemQuantity = this.items.get(cartItem.id)!.quantity--;
+
+    if (itemQuantity == 0) {
+      this.removeItem(cartItem);
+      return;
+    }
+
+    this.computeCartTotal();
+  }
+
+  removeItem(cartItem: CartItem) {
+    this.items.delete(cartItem.id);
     this.computeCartTotal();
   }
 
