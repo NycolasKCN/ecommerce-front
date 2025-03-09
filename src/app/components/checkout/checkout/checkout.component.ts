@@ -2,9 +2,8 @@ import { CurrencyPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CustomerFormComponent } from '../customer-form/customer-form.component';
-import { ShippingAddressFormComponent } from '../shipping-address-form/shipping-address-form.component';
-import { BillingAddressFormComponent } from '../billing-address-form/billing-address-form.component';
 import { CreditCardFormComponent } from '../credit-card-form/credit-card-form.component';
+import { AddressFormComponent } from '../address-form/address-form.component';
 
 @Component({
   selector: 'app-checkout',
@@ -12,8 +11,7 @@ import { CreditCardFormComponent } from '../credit-card-form/credit-card-form.co
     ReactiveFormsModule,
     CurrencyPipe,
     CustomerFormComponent,
-    ShippingAddressFormComponent,
-    BillingAddressFormComponent,
+    AddressFormComponent,
     CreditCardFormComponent,
   ],
   templateUrl: './checkout.component.html',
@@ -60,6 +58,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   copyShippingAddressToShippingAddress(event: any) {
+    // TODO: fix copy bug
     if (event.target.checked) {
       this.checkoutFormGroup.controls['billingAddress'].setValue(
         this.checkoutFormGroup.controls['shippingAddress'].value

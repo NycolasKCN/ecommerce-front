@@ -4,9 +4,10 @@
       <form [formGroup]="checkoutFormGroup" (ngSubmit)="onSubmit()">
         <app-customer-form formGroupName="customer"></app-customer-form>
 
-        <app-shipping-address-form
+        <app-address-form
           formGroupName="shippingAddress"
-        ></app-shipping-address-form>
+          title="Shipping Address"
+        ></app-address-form>
 
         <div class="input-space">
           <label class="au-checkbox" for="SameAddress">
@@ -20,9 +21,10 @@
           </label>
         </div>
 
-        <app-billing-address-form
+        <app-address-form
           formGroupName="billingAddress"
-        ></app-billing-address-form>
+          title="Billing Address"
+        ></app-address-form>
 
         <app-credit-card-form formGroupName="creditCard"></app-credit-card-form>
 

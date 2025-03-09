@@ -15,7 +15,7 @@ import { CartItem } from '../../common/cart-item';
 })
 export class ProductsListComponent implements OnInit {
   currentPageNumber: number = 1;
-  pageSize: number = 5;
+  pageSize: number = 10;
   totalProductsRetrived: number = 0;
 
   currentCategoryId: number = 1;
