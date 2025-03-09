@@ -1,9 +1,16 @@
 import { CurrencyPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { CustomerFormComponent } from '../customer-form/customer-form.component';
 import { CreditCardFormComponent } from '../credit-card-form/credit-card-form.component';
 import { AddressFormComponent } from '../address-form/address-form.component';
+import { EcommerceValidators } from '../../../common/validator/ecommerce-validators';
 
 @Component({
   selector: 'app-checkout',
@@ -28,9 +35,21 @@ export class CheckoutComponent implements OnInit {
   ngOnInit(): void {
     this.checkoutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
-        firstName: [''],
-        lastName: [''],
-        email: [''],
+        firstName: new FormControl('', [
+          Validators.required,
+          Validators.minLength(3),
+          EcommerceValidators.notOnlyWhiteSpace,
+        ]),
+        lastName: new FormControl('', [
+          Validators.required,
+          Validators.minLength(3),
+          EcommerceValidators.notOnlyWhiteSpace,
+        ]),
+        email: new FormControl('', [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.email,
+        ]),
       }),
       shippingAddress: this.formBuilder.group({
         street: [''],
@@ -69,6 +88,9 @@ export class CheckoutComponent implements OnInit {
   }
 
   onSubmit() {
+    if (this.checkoutFormGroup.invalid) {
+      this.checkoutFormGroup.markAllAsTouched();
+    }
     console.log(this.checkoutFormGroup.value);
   }
 }

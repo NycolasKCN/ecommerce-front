@@ -1,7 +1,7 @@
 import { NgForOf, TitleCasePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { ProductCategory } from '../../common/product-category';
+import { ProductCategory } from '../../common/object/product-category';
 import { ProductCategoryService } from '../../services/product-category.service';
 
 @Component({

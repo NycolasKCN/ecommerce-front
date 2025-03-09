@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { from, map, Observable, of } from 'rxjs';
-import { Country } from '../common/country';
-import { State } from '../common/state';
+import { Country } from '../common/object/country';
+import { State } from '../common/object/state';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({

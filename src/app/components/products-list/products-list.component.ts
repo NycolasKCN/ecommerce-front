@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CurrencyPipe, NgForOf, NgIf } from '@angular/common';
 import { ProductService } from '../../services/product.service';
-import { Product } from '../../common/product';
+import { Product } from '../../common/object/product';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { NgbPagination } from '@ng-bootstrap/ng-bootstrap';
 import { CartService } from '../../services/cart.service';
-import { CartItem } from '../../common/cart-item';
+import { CartItem } from '../../common/object/cart-item';
 
 @Component({
   selector: 'app-products-list',

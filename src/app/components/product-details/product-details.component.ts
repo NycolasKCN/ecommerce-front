@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Product } from '../../common/product';
+import { Product } from '../../common/object/product';
 import { ProductService } from '../../services/product.service';
 import { ActivatedRoute } from '@angular/router';
 import { CurrencyPipe } from '@angular/common';
 import { CartService } from '../../services/cart.service';
-import { CartItem } from '../../common/cart-item';
+import { CartItem } from '../../common/object/cart-item';
 
 @Component({
   selector: 'app-product-details',

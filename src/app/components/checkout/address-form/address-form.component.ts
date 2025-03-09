@@ -5,8 +5,8 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { EcommerceFormService } from '../../../services/ecommerce-form.service';
-import { Country } from '../../../common/country';
-import { State } from '../../../common/state';
+import { Country } from '../../../common/object/country';
+import { State } from '../../../common/object/state';
 import { NgForOf } from '@angular/common';
 
 @Component({
