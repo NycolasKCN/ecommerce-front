@@ -14,16 +14,11 @@
           *ngIf="firstName?.invalid && (firstName?.dirty || firstName?.touched)"
           class="alert alert-danger"
         >
-          <div
-            *ngIf="
-              firstName?.hasError('required') ||
-              firstName?.hasError('onlyWhiteSpace')
-            "
-          >
+          <div *ngIf="firstName?.hasError('required')">
             First Name is required!
           </div>
 
-          <div *ngIf="firstName?.hasError('minlength')">
+          <div *ngIf="firstName?.hasError('minLengthTrimmed')">
             First Name must have at least 3 characters!
           </div>
         </div>
@@ -42,16 +37,11 @@
           *ngIf="lastName?.invalid && (lastName?.dirty || lastName?.touched)"
           class="alert alert-danger"
         >
-          <div
-            *ngIf="
-              lastName?.hasError('required') ||
-              firstName?.hasError('onlyWhiteSpace')
-            "
-          >
+          <div *ngIf="lastName?.hasError('required')">
             Last Name is required!
           </div>
 
-          <div *ngIf="lastName?.hasError('minlength')">
+          <div *ngIf="firstName?.hasError('minLengthTrimmed')">
             Last Name must have at least 3 characters!
           </div>
         </div>

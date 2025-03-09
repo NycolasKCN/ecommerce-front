@@ -5,11 +5,11 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { EcommerceFormService } from '../../../services/ecommerce-form.service';
-import { NgForOf } from '@angular/common';
+import { NgForOf, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-credit-card-form',
-  imports: [ReactiveFormsModule, NgForOf],
+  imports: [ReactiveFormsModule, NgForOf, NgIf],
   templateUrl: './credit-card-form.component.html',
   styleUrl: './credit-card-form.component.css',
 })
@@ -34,5 +34,29 @@ export class CreditCardFormComponent implements OnInit {
       .subscribe((data) => (this.creditCardYears = data));
 
     this.form = this.rootFormGroup.control.get(this.formGroupName) as FormGroup;
+  }
+
+  get cardType() {
+    return this.form.get('cardType');
+  }
+
+  get nameOnCard() {
+    return this.form.get('nameOnCard');
+  }
+
+  get cardNumber() {
+    return this.form.get('cardNumber');
+  }
+
+  get securityCode() {
+    return this.form.get('securityCode');
+  }
+
+  get expirationMonth() {
+    return this.form.get('expirationMonth');
+  }
+
+  get expirationYear() {
+    return this.form.get('expirationYear');
   }
 }

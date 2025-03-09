@@ -7,11 +7,11 @@ import {
 import { EcommerceFormService } from '../../../services/ecommerce-form.service';
 import { Country } from '../../../common/object/country';
 import { State } from '../../../common/object/state';
-import { NgForOf } from '@angular/common';
+import { NgForOf, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-address-form',
-  imports: [ReactiveFormsModule, NgForOf],
+  imports: [ReactiveFormsModule, NgForOf, NgIf],
   templateUrl: './address-form.component.html',
   styleUrl: './address-form.component.css',
 })
@@ -41,5 +41,25 @@ export class AddressFormComponent implements OnInit {
     this.formService
       .getStates(countryCode)
       .subscribe((states) => (this.states = states));
+  }
+
+  get street() {
+    return this.form.get('street');
+  }
+
+  get city() {
+    return this.form.get('city');
+  }
+
+  get state() {
+    return this.form.get('state');
+  }
+
+  get country() {
+    return this.form.get('country');
+  }
+
+  get zipCode() {
+    return this.form.get('zipCode');
   }
 }

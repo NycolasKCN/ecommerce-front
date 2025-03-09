@@ -12,6 +12,15 @@
             <option>Mastercard</option>
           </select>
         </div>
+
+        <div
+          *ngIf="cardType?.invalid && (cardType?.dirty || cardType?.touched)"
+          class="alert alert-danger"
+        >
+          <div *ngIf="cardType?.hasError('required')">
+            Card type is required
+          </div>
+        </div>
       </div>
     </div>
 
@@ -22,6 +31,21 @@
       <div class="col-md-9">
         <div class="input-space">
           <input id="NameOnCard" type="text" formControlName="nameOnCard" />
+        </div>
+
+        <div
+          *ngIf="
+            nameOnCard?.invalid && (nameOnCard?.dirty || nameOnCard?.touched)
+          "
+          class="alert alert-danger"
+        >
+          <div *ngIf="nameOnCard?.hasError('required')">
+            Name on card is required
+          </div>
+
+          <div *ngIf="nameOnCard?.hasError('minLengthTrimmed')">
+            Name on card must be at least 3 characters
+          </div>
         </div>
       </div>
     </div>
@@ -34,6 +58,21 @@
         <div class="input-space">
           <input id="CardNumber" type="text" formControlName="cardNumber" />
         </div>
+
+        <div
+          *ngIf="
+            cardNumber?.invalid && (cardNumber?.dirty || cardNumber?.touched)
+          "
+          class="alert alert-danger"
+        >
+          <div *ngIf="cardNumber?.hasError('required')">
+            Card number is required
+          </div>
+
+          <div *ngIf="cardNumber?.hasError('pattern')">
+            Card number must have 16 characters
+          </div>
+        </div>
       </div>
     </div>
 
@@ -44,6 +83,22 @@
       <div class="col-md-9">
         <div class="input-space">
           <input id="SecurityCode" type="text" formControlName="securityCode" />
+        </div>
+
+        <div
+          *ngIf="
+            securityCode?.invalid &&
+            (securityCode?.dirty || securityCode?.touched)
+          "
+          class="alert alert-danger"
+        >
+          <div *ngIf="securityCode?.hasError('required')">
+            Security code is required
+          </div>
+
+          <div *ngIf="securityCode?.hasError('pattern')">
+            Security code must have 3 characters
+          </div>
         </div>
       </div>
     </div>
@@ -60,6 +115,18 @@
             </option>
           </select>
         </div>
+
+        <div
+          *ngIf="
+            expirationMonth?.invalid &&
+            (expirationMonth?.dirty || expirationMonth?.touched)
+          "
+          class="alert alert-danger"
+        >
+          <div *ngIf="expirationMonth?.hasError('required')">
+            Expiration month is required
+          </div>
+        </div>
       </div>
     </div>
 
@@ -72,6 +139,18 @@
           <select id="ExpirationYear" formControlName="expirationYear">
             <option *ngFor="let year of creditCardYears">{{ year }}</option>
           </select>
+        </div>
+
+        <div
+          *ngIf="
+            expirationYear?.invalid &&
+            (expirationYear?.dirty || expirationYear?.touched)
+          "
+          class="alert alert-danger"
+        >
+          <div *ngIf="expirationYear?.hasError('required')">
+            Expiration Year is required
+          </div>
         </div>
       </div>
     </div>
