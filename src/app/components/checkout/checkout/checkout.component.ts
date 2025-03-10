@@ -12,6 +12,13 @@ import { CreditCardFormComponent } from '../credit-card-form/credit-card-form.co
 import { AddressFormComponent } from '../address-form/address-form.component';
 import { EcommerceValidators } from '../../../common/validator/ecommerce-validators';
 import { CartService } from '../../../services/cart.service';
+import { Router } from '@angular/router';
+import {
+  CheckoutService,
+  PostRequestOrderItem,
+  PostRequestPurchase,
+} from '../../../services/checkout.service';
+import { Address } from '../../../common/object/address';
 
 @Component({
   selector: 'app-checkout',
@@ -35,7 +42,9 @@ export class CheckoutComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private cartService: CartService
+    private cartService: CartService,
+    private checkoutService: CheckoutService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -46,8 +55,29 @@ export class CheckoutComponent implements OnInit {
   onSubmit(): void {
     if (this.checkoutFormGroup.invalid) {
       this.checkoutFormGroup.markAllAsTouched();
+      return;
     }
-    console.log(this.checkoutFormGroup.value);
+
+    const purchase: PostRequestPurchase = this.createPostRequestPurchase();
+
+    this.checkoutService.placeOrder(purchase).subscribe({
+      next: (response) => {
+        alert(
+          `Your order has been received.\nOrder tracking number: ${response.orderTrackingNumber}`
+        );
+
+        this.resetCart();
+      },
+      error: (error) => {
+        alert(`There was an error: ${error.message}`);
+      },
+    });
+  }
+
+  resetCart() {
+    this.cartService.clearCart();
+    this.checkoutFormGroup.reset();
+    this.router.navigateByUrl('/products');
   }
 
   reviewCartDetails(): void {
@@ -66,6 +96,46 @@ export class CheckoutComponent implements OnInit {
     } else {
       this.checkoutFormGroup.controls['billingAddress'].reset();
     }
+  }
+
+  createPostRequestPurchase(): PostRequestPurchase {
+    const shippingAddress: Address = this.checkoutFormGroup.controls[
+      'shippingAddress'
+    ].value as Address;
+    const billingAddress: Address = this.checkoutFormGroup.controls[
+      'billingAddress'
+    ].value as Address;
+    const orderItems: PostRequestOrderItem[] = Array.from(
+      this.cartService.items.values()
+    ).map((cartItem) => ({
+      productId: cartItem.id,
+      quantity: cartItem.quantity,
+      priceAtPurchase: cartItem.unitPrice,
+    }));
+
+    return {
+      // TODO: Implement the logic to have customer id from the logged in user
+      customerId: 1,
+      shippingAddress: {
+        city: shippingAddress.city,
+        street: shippingAddress.street,
+        zipCode: shippingAddress.street,
+        countryId: shippingAddress.country.id,
+        stateId: shippingAddress.state.id,
+      },
+      billingAddress: {
+        city: billingAddress.city,
+        street: billingAddress.street,
+        zipCode: billingAddress.street,
+        countryId: billingAddress.country.id,
+        stateId: billingAddress.state.id,
+      },
+      order: {
+        totalQuantity: this.totalQuantity,
+        totalPrice: this.totalPrice,
+      },
+      orderItems: orderItems,
+    } as PostRequestPurchase;
   }
 
   createCheckoutFormGroup(): void {

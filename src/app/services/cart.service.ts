@@ -39,6 +39,12 @@ export class CartService {
     this.computeCartTotal();
   }
 
+  clearCart() {
+    this.totalPrice.next(0);
+    this.totalQuantity.next(0);
+    this.items.clear();
+  }
+
   computeCartTotal() {
     let subTotal: number = 0;
     let subQuantityTotal: number = 0;
