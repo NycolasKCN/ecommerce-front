@@ -1,0 +1,12 @@
+<div class="login-status-header">
+  <ng-container *ngIf="isAuthenticated; else loggedOut">
+    <div class="login-status-user-info">Welcome, {{ fullName }}!</div>
+    <button (click)="auth.logout()" class="security-btn">Log out</button>
+  </ng-container>
+
+  <ng-template #loggedOut>
+    <button (click)="auth.loginWithRedirect()" class="security-btn">
+      Log in
+    </button>
+  </ng-template>
+</div>

@@ -12,6 +12,7 @@ export const routes: Routes = [
   { path: 'category', component: ProductsListComponent },
   { path: 'products', component: ProductsListComponent },
   { path: 'products/:id', component: ProductDetailsComponent },
+  { path: 'login/callback', redirectTo: '/products', pathMatch: 'full' },
   { path: '', redirectTo: '/products', pathMatch: 'full' },
   { path: '**', redirectTo: '/products', pathMatch: 'full' },
 ];
