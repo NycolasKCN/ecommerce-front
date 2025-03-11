@@ -33,6 +33,10 @@ export class CartDetailsComponent implements OnInit {
     this.cartService.removeItem(cartItem);
   }
 
+  clearCart() {
+    this.cartService.clearCart();
+  }
+
   listCartDetails() {
     this.cartItems = this.cartService.items;
     this.cartService.totalPrice.subscribe((value) => (this.totalPrice = value));
