@@ -7,6 +7,7 @@
         <app-address-form
           formGroupName="shippingAddress"
           title="Shipping Address"
+          #shippingAddressForm
         ></app-address-form>
 
         <div class="input-space">
@@ -14,7 +15,7 @@
             <input
               type="checkbox"
               id="SameAddress"
-              (change)="copyShippingAddressToShippingAddress($event)"
+              (change)="copyShippingAddressToBillingAddress($event)"
             />
             <span class="au-checkmark"></span>
             Billing Address same as Shipping Address
@@ -24,6 +25,7 @@
         <app-address-form
           formGroupName="billingAddress"
           title="Billing Address"
+          #billingAddressForm
         ></app-address-form>
 
         <app-credit-card-form formGroupName="creditCard"></app-credit-card-form>

@@ -1,5 +1,5 @@
 import { CurrencyPipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -39,6 +39,9 @@ export class CheckoutComponent implements OnInit {
   totalQuantity: number = 0;
 
   checkoutFormGroup!: FormGroup;
+
+  @ViewChild('shippingAddressForm') shippingAddressForm!: AddressFormComponent;
+  @ViewChild('billingAddressForm') billingAddressForm!: AddressFormComponent;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -87,9 +90,10 @@ export class CheckoutComponent implements OnInit {
     );
   }
 
-  copyShippingAddressToShippingAddress(event: any) {
-    // TODO: fix copy bug
+  copyShippingAddressToBillingAddress(event: any) {
     if (event.target.checked) {
+      this.billingAddressForm.states = this.shippingAddressForm.states;
+      this.billingAddressForm.countries = this.shippingAddressForm.countries;
       this.checkoutFormGroup.controls['billingAddress'].setValue(
         this.checkoutFormGroup.controls['shippingAddress'].value
       );
