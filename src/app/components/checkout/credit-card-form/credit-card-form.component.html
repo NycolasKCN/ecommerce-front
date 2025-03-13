@@ -115,18 +115,6 @@
             </option>
           </select>
         </div>
-
-        <div
-          *ngIf="
-            expirationMonth?.invalid &&
-            (expirationMonth?.dirty || expirationMonth?.touched)
-          "
-          class="alert alert-danger"
-        >
-          <div *ngIf="expirationMonth?.hasError('required')">
-            Expiration month is required
-          </div>
-        </div>
       </div>
     </div>
 
@@ -139,18 +127,6 @@
           <select id="ExpirationYear" formControlName="expirationYear">
             <option *ngFor="let year of creditCardYears">{{ year }}</option>
           </select>
-        </div>
-
-        <div
-          *ngIf="
-            expirationYear?.invalid &&
-            (expirationYear?.dirty || expirationYear?.touched)
-          "
-          class="alert alert-danger"
-        >
-          <div *ngIf="expirationYear?.hasError('required')">
-            Expiration Year is required
-          </div>
         </div>
       </div>
     </div>

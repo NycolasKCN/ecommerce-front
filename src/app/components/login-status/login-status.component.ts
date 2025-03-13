@@ -1,35 +1,32 @@
-import { NgIf } from '@angular/common';
+import { AsyncPipe, NgIf, TitleCasePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '@auth0/auth0-angular';
-import { CustomerInfo } from '../../common/object/customer-info';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+import { Customer } from '../../common/object/customer';
 
 @Component({
   selector: 'app-login-status',
-  imports: [NgIf, RouterLink],
+  imports: [NgIf, RouterLink, TitleCasePipe, AsyncPipe],
   templateUrl: './login-status.component.html',
   styleUrl: './login-status.component.css',
 })
 export class LoginStatusComponent implements OnInit {
-  isAuthenticated: boolean = false;
-  customerInfo!: CustomerInfo;
+  isAuthenticated = false;
+  customer: Customer = new Customer();
 
-  storage: Storage = window.sessionStorage;
-
-  constructor(public auth: AuthService) {}
+  constructor(public authService: AuthService) {}
 
   ngOnInit() {
-    this.auth.user$.subscribe((user) => {
-      this.customerInfo = {
-        name: user?.name,
-        email: user?.email,
-        firstName: user?.given_name,
-        lastName: user?.family_name,
-      } as CustomerInfo;
-      this.storage.setItem('customerInfo', JSON.stringify(this.customerInfo));
+    this.authService.customer$.subscribe((customer) => {
+      this.customer = customer!;
     });
-    this.auth.isAuthenticated$.subscribe((isAuthenticated) => {
+    this.authService.isAuthenticated$.subscribe((isAuthenticated) => {
+      console.log('update isAuthenticated: ' + isAuthenticated);
       this.isAuthenticated = isAuthenticated;
     });
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }

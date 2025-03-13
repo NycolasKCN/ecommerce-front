@@ -11,7 +11,7 @@ export class CartService {
   totalPrice: Subject<number> = new BehaviorSubject<number>(0);
   totalQuantity: Subject<number> = new BehaviorSubject<number>(0);
 
-  storage: Storage = sessionStorage;
+  storage: Storage = window.sessionStorage;
 
   constructor() {
     this.readItemsFromStorage();

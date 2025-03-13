@@ -10,4 +10,13 @@ export class EcommerceValidators {
         : null;
     };
   }
+
+  static validEmail(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const emailPattern: RegExp = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+      const isValidEmail: boolean =
+        control.value != null && emailPattern.test(control.value);
+      return isValidEmail ? null : { validEmail: { value: control.value } };
+    };
+  }
 }

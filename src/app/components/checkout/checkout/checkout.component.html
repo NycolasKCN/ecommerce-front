@@ -2,8 +2,6 @@
   <div class="section-content section-content-p30">
     <div class="container-fluid">
       <form [formGroup]="checkoutFormGroup" (ngSubmit)="onSubmit()">
-        <app-customer-form formGroupName="customer"></app-customer-form>
-
         <app-address-form
           formGroupName="shippingAddress"
           title="Shipping Address"

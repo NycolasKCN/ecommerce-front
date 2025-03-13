@@ -1,34 +1,50 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderHistoryService } from '../../services/order-history.service';
 import { Order } from '../../common/object/order';
-import { CustomerInfo } from '../../common/object/customer-info';
-import { CurrencyPipe, DatePipe, NgForOf, NgIf } from '@angular/common';
+import {
+  CurrencyPipe,
+  DatePipe,
+  NgForOf,
+  NgIf,
+  TitleCasePipe,
+} from '@angular/common';
+import { Customer } from '../../common/object/customer';
+import { Router } from '@angular/router';
+import { routes } from '../../app.routes';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-order-history',
-  imports: [NgIf, NgForOf, CurrencyPipe, DatePipe],
+  imports: [NgIf, NgForOf, CurrencyPipe, DatePipe, TitleCasePipe],
   templateUrl: './order-history.component.html',
   styleUrl: './order-history.component.css',
 })
 export class OrderHistoryComponent implements OnInit {
   orders: Order[] = [];
-  storage: Storage = window.sessionStorage;
-  customerInfo!: CustomerInfo;
+  customer!: Customer;
 
-  constructor(private orderHistoryService: OrderHistoryService) {}
+  constructor(
+    private orderHistoryService: OrderHistoryService,
+    private router: Router,
+    private authService: AuthService
+  ) {
+    this.authService.customer$.subscribe((customer) => {
+      this.customer = customer!;
+    });
+  }
 
   ngOnInit(): void {
-    this.customerInfo = JSON.parse(this.storage.getItem('customerInfo')!);
-    if (this.customerInfo) {
+    if (this.customer) {
       this.handleOrderHistory();
     } else {
       console.error('Customer info not found');
+      this.router.navigate(['/login']);
     }
   }
 
   handleOrderHistory(): void {
     this.orderHistoryService
-      .getOrderHistory(this.customerInfo.email)
+      .getOrderHistory(this.customer.email)
       .subscribe((data) => {
         console.log(data);
         this.orders = data.content;
